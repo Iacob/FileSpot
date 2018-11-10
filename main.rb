@@ -33,7 +33,7 @@ post '/upload' do
   FileUtils.mkdir(file_path_full)
   FileUtils.cp(tempfile, final_file_location)
   #
-  file_url_path = FILESPOT_FILE_URL_PATH + "/" + file_id + "/" +tempfilename
+  file_url_path = "/" + FILESPOT_FILE_URL_PATH + "/" + file_id + "/" +tempfilename
   #
   #puts IO.read(tempfile)
   #return 'uploaded'
