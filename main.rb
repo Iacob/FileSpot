@@ -9,6 +9,7 @@ set :port, 8080
 set :public_folder, 'web'
 
 FILESPOT_FILE_PATH = "web/files"
+FILESPOT_FILE_URL_PATH = "web/files"
 
 # Show current directory
 puts Dir::pwd
@@ -24,9 +25,17 @@ post '/upload' do
   tempfile = params['file1'][:tempfile]
   #
   file_id = Digest::MD5.hexdigest Time.now.to_f.to_s
-  FileUtils.mkdir(Dir::pwd + "/#{FILESPOT_FILE_PATH}/" + file_id)
-  FileUtils.cp(tempfile, Dir::pwd + "/#{FILESPOT_FILE_PATH}/" + file_id + "/" + tempfilename)
+  #
+  file_path = FILESPOT_FILE_PATH + File::SEPARATOR + file_id
+  file_path_full = Dir::pwd + File::SEPARATOR + file_path
+  final_file_location = file_path_full + File::SEPARATOR + tempfilename
+  #
+  FileUtils.mkdir(file_path_full)
+  FileUtils.cp(tempfile, final_file_location)
+  #
+  file_url_path = FILESPOT_FILE_URL_PATH + "/" + file_id + "/" +tempfilename
+  #
   #puts IO.read(tempfile)
   #return 'uploaded'
-  return "/#{FILESPOT_FILE_PATH}/" + file_id + "/" + tempfilename
+  return file_url_path
 end
