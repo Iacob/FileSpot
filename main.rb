@@ -9,7 +9,7 @@ set :port, 8080
 set :public_folder, 'web'
 
 FILESPOT_FILE_PATH = "web/files"
-FILESPOT_FILE_URL_PATH = "web/files"
+FILESPOT_FILE_URL_PATH = "files"
 
 # Show current directory
 puts Dir::pwd
@@ -19,7 +19,7 @@ get '/' do
 end
 
 post '/upload' do
-  content_type 'text/plain'
+  content_type 'text/html'
   #
   tempfilename = params['file1'][:filename]
   tempfile = params['file1'][:tempfile]
@@ -37,5 +37,5 @@ post '/upload' do
   #
   #puts IO.read(tempfile)
   #return 'uploaded'
-  return file_url_path
+  return "<html><head></head><body><a href=\""+ file_url_path +"\">" + file_url_path + "</a></body></html>"
 end
